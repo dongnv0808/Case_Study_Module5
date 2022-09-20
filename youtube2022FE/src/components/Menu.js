@@ -13,10 +13,12 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import SlideshowIcon from '@mui/icons-material/Slideshow';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
     flex: 1;
-    background-color: ${({theme}) => theme.bg};
+    background-color: ${({theme}) => theme.bgLighter};
     height: 100vh;
     color: ${({theme}) => theme.text};
     font-size: 14px;
@@ -42,10 +44,13 @@ const Item = styled.div`
     gap: 20px;
     cursor: pointer;
     padding: 7.5px 0px;
+    &:hover{
+        background-color: ${({theme}) => theme.soft}
+    }
 `;
 const Hr = styled.hr`
     margin: 15px 0px;
-    border: 1px solid ${({theme}) => theme.soft}
+    border: 0.5px solid ${({theme}) => theme.soft}
 `
 
 const Login = styled.div`
@@ -63,14 +68,23 @@ const Button = styled.button`
     align-items: center;
     gap: 5px
 `
-export const Menu = () => {
+const Title = styled.h2`
+    font-size: 14px;
+    font-weight: 500;
+    color: #aaaaaa;
+    margin-bottom: 20px
+`
+
+export const Menu = ({darkMode, setDarkMode}) => {
     return (
         <Container>
             <Wrapper>
+                <Link to="/" style={{textDecoration: "none", color:"inherit"}}>
                 <Logo>
                     <Img src={LamaTube}/>
                     DuyTube
                 </Logo>
+                </Link>
                 <Item>
                     <HomeIcon/>
                     Trang chủ
@@ -98,6 +112,7 @@ export const Menu = () => {
                     <Button><AccountCircleIcon/>SIGN IN</Button>
                 </Login>
                 <Hr/>
+                <Title>BEST OF DUYTUBE</Title>
                 <Item>
                     <SlideshowIcon/>
                     Video của bạn
@@ -105,6 +120,10 @@ export const Menu = () => {
                 <Item>
                     <AccessTimeIcon/>
                     Xem sau
+                </Item>
+                <Item onClick={() => setDarkMode(!darkMode)}>
+                    <SettingsBrightnessIcon/>
+                    {darkMode ? "Light" : "Dark"} Mode
                 </Item>
                 <Item>
                     <Accordion>

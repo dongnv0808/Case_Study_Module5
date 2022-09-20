@@ -1,4 +1,5 @@
-import { NextFunction, Request, Response } from "express";
+import e, { NextFunction, Request, Response } from "express";
+import { Video } from "../model/video";
 import { User } from "../model/user";
 
 class UserController{
@@ -73,5 +74,45 @@ class UserController{
             next(err);
         }
     }
-}
+
+    likeVideo = async (req: any, res: Response) => {
+        let data = req.body
+        let idUser = data.idUser
+        let idVideo = data.idVideo
+        
+        let user = await User.findOne({
+            _id: idUser
+        })
+        let video = await Video.findById(idVideo)
+        if(user && video) {
+            await User.updateMany({ _id: idUser }, { $push: { listLike: video._id } });
+            let newUser = await User.findOne({
+                _id: idUser
+            });
+            res.status(200).json(newUser);
+        }else {
+            res.status(404).json();
+        }
+    }
+    disLikeVideo = async (req: any, res: Response) => {
+        let data = req.body
+        let idUser = data.idUser
+        let idVideo = data.idVideo
+
+        let user = await User.findOne({
+            _id: idUser
+        })
+        let video = await Video.findById(idVideo)
+        if(user && video) {
+            await User.updateMany({_id: idUser}, { $pull: { listLike: video._id } });
+            let userUpdate = await User.findOne({
+            _id: idUser
+        })
+            res.status(200).json(userUpdate);
+
+        }else {
+            res.status(404).json();
+        }
+    }
+} 
 export default new UserController();

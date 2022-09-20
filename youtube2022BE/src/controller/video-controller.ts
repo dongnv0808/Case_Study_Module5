@@ -9,18 +9,20 @@ class VideoController {
             let videos = await Video.find()
             res.status(200).json(videos);
         }catch {
-            throw new Error('lỗi get Video!')
+            res.status(404).json();
         }
     };
 
     addVideo = async(req: any, res: any) => {
         try {
             let video = req.body;
-            new Date(video.time);
+            let day = new Date;
+            video.dateCreate = day;
             await Video.create(video);
             res.status(200).json(video);
         }catch (err) {
-            console.log(err);
+            res.status(404).json();
+
         }
     }
 
@@ -33,8 +35,7 @@ class VideoController {
             video.delete()
             res.status(204).json();
         }catch(err) {
-            console.log(err);
-            // throw new Error('lỗi xoá Video!')
+            res.status(404).json();
         }
     }
 }

@@ -4,8 +4,8 @@ import userController from "../controller/user-controller";
 
 export const userRoute = Router();
 
-userRoute.use(authAdmin)
+// userRoute.use(authAdmin)
 userRoute.get('', userController.getAll);
-userRoute.post('', userController.addUser);
 userRoute.put('/:id', userController.updateUser);
-userRoute.delete('/:id', userController.deleteUser);
+userRoute.put('/video/like', userController.likeVideo)
+userRoute.put('/video/disLike', userController.disLikeVideo)

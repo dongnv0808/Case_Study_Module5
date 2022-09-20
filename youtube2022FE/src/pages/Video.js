@@ -6,6 +6,7 @@ import ReplyIcon from '@mui/icons-material/Reply';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import { Comments } from '../components/Comments';
 import Card from './Card';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
     display: flex;
@@ -52,7 +53,7 @@ const Button = styled.div`
 `
 
 const Hr = styled.hr`
-margin: 15px 0px;
+    margin: 15px 0px;
     border: 0.5 solid ${({theme}) => theme.soft}
 `
 
@@ -109,17 +110,18 @@ const Subscribe = styled.button`
 `
 
 const Video = () => {
+    let video = useSelector(state => state.videos.video);
     return (
         <Container>
             <Content>
                 <VideoWrapper>
-                    <iframe width="100%" height="420px" src="https://www.youtube.com/embed/iTRM_5v2GVQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe width="100%" height="420px" src={`https://www.youtube.com/embed/${video.video}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </VideoWrapper>
-                <Title>Test Video</Title>
+                <Title>{video.title}</Title>
                 <Details>
-                    <Info>39.720 lượt xem - 30 thg 6, 2022 </Info>
+                    <Info>{video.view} lượt xem - {video.dateCreate} </Info>
                     <Buttons>
-                        <Button><ThumbUpAltIcon/> Like</Button>
+                        <Button><ThumbUpAltIcon/> {video.like}</Button>
                         <Button><ThumbDownAltIcon/> Dislike</Button>
                         <Button><ReplyIcon/> Share</Button>
                         <Button><PlaylistAddIcon/> Save</Button>
@@ -141,15 +143,6 @@ const Video = () => {
                 <Comments></Comments>
             </Content>
             <Recommendation>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
                 <Card type="sm"/>
             </Recommendation>
         </Container>

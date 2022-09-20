@@ -2,7 +2,7 @@ import { model, Schema } from "mongoose";
 import {IUser} from './user';
 
 export interface IVideo {
-    avatar: string,
+    avatarVideo: string,
     video: string,
     title: string,
     view: number,
@@ -14,7 +14,7 @@ export interface IVideo {
 }
 
 const videoSchema = new Schema<IVideo>({
-    avatar: String,
+    avatarVideo: String,
     video: String,
     title: String,
     view: Number,

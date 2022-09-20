@@ -6,7 +6,7 @@ import moment, { isDate } from 'moment';
 class VideoController {
     getAllVideo = async(req: any, res: any) => {
         try {
-            let videos = await Video.find()
+            let videos = await Video.find().populate("idUser", ["familyName", "imageUrl"])
             res.status(200).json(videos);
         }catch {
             res.status(404).json();
@@ -38,6 +38,17 @@ class VideoController {
             res.status(404).json();
         }
     }
+
+    getDetailVideo = async(req: any, res: any) => {
+        try {
+            let id = req.params.id;
+            let video = await Video.findById(id)
+            res.status(200).json(video);
+        }catch {
+            res.status(404).json();
+        }
+    };
+
 }
 
 export default new VideoController();

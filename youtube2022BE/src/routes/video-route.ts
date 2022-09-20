@@ -8,5 +8,6 @@ export const videoRouter = Router();
 // videoRouter.use(auth);
 
 videoRouter.get('', videoController.getAllVideo);
+videoRouter.get('/:id', videoController.getDetailVideo);
 videoRouter.post('', videoController.addVideo);
 videoRouter.delete('/:id', videoController.deleteVideo);

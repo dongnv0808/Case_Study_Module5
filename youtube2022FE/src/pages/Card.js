@@ -1,18 +1,22 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { getAllVideo, getDetailVideo } from "../redux/apis";
 
 const Container = styled.div`
-    width: ${(props) => props.type !== "sm" && "250px"};
+    width: ${(props) => props.type !== "sm" && "270px"};
     margin-bottom: ${(props) => props.type === "sm" ? "10px" : "45px"};
     cursor: pointer;
-    display: ${(props) => props.type === "sm" && "flex"};
+    float: left;
+    margin-left: 20px;
+    width: 24,9999999%;
     gap: 10px
 `
 
 const Image = styled.img`
     width: 100%;
-    height: ${(props) => props.type === "sm" ? "120px" : "202px"};
+    height: ${(props) => props.type === "sm" ? "120px" : "170px"};
     background-color: #9999;
     flex: 1;
 `
@@ -50,20 +54,38 @@ const Info = styled.div`
 `;
 
 const Card = ({type}) => {
+    const navigate = useNavigate();
+    const dispath = useDispatch();
+    useEffect(() => {
+        dispath(getAllVideo());
+    }, [])
+    let videos = useSelector(state => state.videos.videos);
+    const handleDetail = async (id) => {
+        await dispath(getDetailVideo(id));
+        navigate(`/video/${id}`)
+    }
     return (
-        <Link to="/video/test" style={{textDecoration: "none"}}>
-        <Container type={type}>
-            <Image type={type} src="https://tinhte.vn/thread/anh-phong-canh-ban-huong-dan-chup-anh-phong-canh-dep-hon.3368841"/>
-            <Details type={type}>
-                <ChannelImage type={type} src="youtube2022FE/src/img/logo.png"/>
-                <Texts>
-                    <Title>Test Video</Title>
-                    <ChannelName>Duy Dev</ChannelName>
-                    <Info>660,908 views * 1 day ago</Info>
-                </Texts>
-            </Details>
-        </Container>
-        </Link>
+        <div>
+            {
+                videos.map((video, index) => (
+                    <Link style={{textDecoration: "none"}}
+                        onClick = {() =>handleDetail(video._id)}
+                    ><Link/>
+                    <Container type={type}>
+                        <Image type={type} src={video.avatarVideo} />
+                        <Details type={type}>
+                            <ChannelImage type={type} src={video.idUser[0].imageUrl}/>
+                            <Texts>
+                                <Title>{video.title}</Title>
+                                <ChannelName>{video.idUser[0].familyName}</ChannelName>
+                                <Info>{video.view} views * 1 day ago</Info>
+                            </Texts>
+                        </Details>
+                    </Container>
+                    </Link>
+                ))
+            }
+        </div>
     )
 }
 

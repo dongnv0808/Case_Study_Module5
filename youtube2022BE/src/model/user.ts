@@ -2,17 +2,18 @@ import { model, Schema } from "mongoose";
 import { IVideo } from './video';
 
 export interface IUser {
-    username: string;
+    googleId: string;
+    familyName: string;
     password: string;
-    avatar: string;
+    imageUrl: string;
     listLike: IVideo;
-    myVideo: IVideo;
 }
 
 const userSchema = new Schema<IUser>({
-    username: String,
+    googleId: String,
+    familyName: String,
     password: String,
-    avatar: String,
+    imageUrl: String,
     listLike: [{ 
         type: Schema.Types.ObjectId, 
         ref: 'Videos' 

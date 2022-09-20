@@ -8,7 +8,7 @@ class AuthController {
     register = async (req, res) => {
         let user = req.body;
         let checkUsername = await User.findOne({
-            username: user.username
+            familyName: user.familyName
         });
         if (checkUsername) {
             res.status(403).error({
@@ -25,7 +25,7 @@ class AuthController {
     async login(req, res) {
         let userForm = req.body;        
         let user = await User.findOne({
-            username: userForm.username
+            familyName: userForm.familyName
         });
         if(!user) {
             res.status(401).json({
@@ -39,7 +39,7 @@ class AuthController {
                 })
             } else {
                 let payload = {
-                    username: user.username,
+                    familyName: user.familyName,
                     idUser: user._id
                 }
                 let token = await jwt.sign(payload, SECRET_KEY, {

@@ -4,7 +4,7 @@ class DataSource{
     constructor(){
     }
     connect() {
-        const DB_URL = 'mongodb://localhost:27017/case4';
+        const DB_URL = 'mongodb://localhost:27017/case5';
         mongoose.connect(DB_URL)
         .then(() => {
             console.log('Connect success');

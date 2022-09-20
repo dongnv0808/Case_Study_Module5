@@ -1,6 +1,13 @@
 import styled from "styled-components";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { LoginGG } from "../redux/slice";
+import {gapi} from "gapi-script";
+import {Avatar} from "@mui/material";
+import GoogleLogin from "react-google-login";
 
 const Container = styled.div`
     position: sticky;
@@ -47,6 +54,29 @@ const Button = styled.button`
     gap: 5px;
 `
 export const Navbar = () =>{
+    let dispatch = useDispatch();
+    const navigate = useNavigate()
+    let user = useSelector(state => state.videos.user.currentUser)
+    console.log(user)
+    const clientId = '703313981953-fh1s05g3g9aaf7qqkls8ei2jmddal5pn.apps.googleusercontent.com'
+    useEffect(() => {
+        const initClient = () => {
+            gapi.client.init({
+                clientId: clientId,
+                scope: ''
+            });
+        };
+        gapi.load('client:auth2', initClient);
+    });
+    const onSuccess = async (response) => {
+        console.log(response)
+        await dispatch(LoginGG(response.profileObj))
+        navigate('')
+    }
+
+    const onFailure = (response) => {
+        console.log(response);
+    }
     return (
         <Container>
             <Wrapper>
@@ -54,7 +84,18 @@ export const Navbar = () =>{
                     <Input placeholder="Search"></Input>
                     <SearchIcon></SearchIcon>
                 </Search>
-                <Button><AccountCircleIcon/>SIGN IN</Button>
+                {
+                    user?
+                        <Avatar src={user.imageUrl}/>:
+                        <GoogleLogin
+                            clientId={clientId}
+                            buttonText="Sign in"
+                            onSuccess={onSuccess}
+                            onFailure={onFailure}
+                            cookiePolicy={'single_host_origin'}
+                            isSignedIn={true}
+                        />
+                }
             </Wrapper>
         </Container>
     )

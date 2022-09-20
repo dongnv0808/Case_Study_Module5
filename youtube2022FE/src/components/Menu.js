@@ -106,11 +106,7 @@ export const Menu = ({darkMode, setDarkMode}) => {
                     <ReplayIcon/>
                     Đã xem
                 </Item>
-                <Hr/>
-                <Login>
-                    Sign in to like videos, comment, and subscribe.
-                    <Button><AccountCircleIcon/>SIGN IN</Button>
-                </Login>
+                
                 <Hr/>
                 <Title>BEST OF DUYTUBE</Title>
                 <Item>

@@ -113,7 +113,7 @@ const Video = () => {
         <Container>
             <Content>
                 <VideoWrapper>
-                    <iframe width="100%" height="420px" src="https://www.youtube.com/embed/cfbNtHNCMBo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe width="100%" height="420px" src="https://www.youtube.com/embed/iTRM_5v2GVQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </VideoWrapper>
                 <Title>Test Video</Title>
                 <Details>
